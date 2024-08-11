@@ -1,0 +1,16 @@
+/* 
+    Document   : HC_Forms
+    Created on : Oct 20, 2020, 4:25:37 PM
+    Author     : rajib
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+.HC_TabError{
+    background-color: #ffcccc;
+}
+
+.HC_TabError a{
+    color: #ff3333;
+    font-weight: bold;
+}

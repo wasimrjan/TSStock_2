@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - TSStock</title>
+    
+    @{
+        @Html.Partial("_IncludeHeader.cshtml");
+     }
+
+    <script>
+        /*
+        $(document).ready(function () {
+            var pg = getQueryString("p");
+            if (pg !== undefined) {
+                sm.OpenLink(pg.replace('#', ''), "hobal");
+            }
+        });
+        */
+    </script>
+
+</head>
+
+
+<body>
+
+    
+
+    <div class="d-flex" id="wrapper">
+
+    @{
+        ViewData["utp"] = "U";
+
+        @Html.Partial("_SideMenu.cshtml",ViewData["utp"]);
+
+    }
+
+    <div id="page-content-wrapper">
+
+        @{
+            @Html.Partial("_TopMenu.cshtml")
+        }
+
+    
+        <div>
+
+            @RenderBody()
+
+        </div>
+
+    </div>
+
+    </div>
+
+    <script>
+       /* $('table.HCGrid').on('scroll', function () {
+            $("table.HCGrid > *").width($("table").width() + $("table").scrollLeft());
+        });*/
+    </script>
+
+    <script>
+
+        $(window).resize(function () {
+            $("#sc_menu").css("height", $(window).height() - 74);
+        });
+
+        $("#menu-toggle").click(function (e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+    </script>
+</body>
+</html>

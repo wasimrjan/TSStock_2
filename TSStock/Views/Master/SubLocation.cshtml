@@ -1,0 +1,18 @@
+﻿
+@{
+    ViewData["Title"] = "SubLocation";
+}
+
+<div class="container">
+
+    <div id="dvacledger">
+    </div>
+
+    <script>
+        fmSubLocation.Dispose();
+        fmSubLocation.OpenFormFinal("dvacledger", "NR");
+        HCGlobal = fmSubLocation;
+    </script>
+
+</div>
+

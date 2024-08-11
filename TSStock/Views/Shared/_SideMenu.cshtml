@@ -1,0 +1,134 @@
+﻿
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@{
+
+    if (ViewData["utp"] == "U")
+    {
+        <script>
+        
+            var SideMenu = [
+                {
+                    nm: "home", menu: "Home", link: "#", submenu: [
+                        { nm: "hm", menu: "Home", link: "home.php" },
+                        { nm: "hm_ch_pass", menu: "Change Password", link: "frm_change_pass.php" }
+                    ]
+                },
+                {
+                    nm: "master", menu: "Master Entry", link: "#",
+                    submenu: [
+                        { nm: "mas_sloc", menu: "New Sub Location", link: "/Master/SubLocation" },
+                        { nm: "mas_ssloc", menu: "New Rack", link: "frm_mst_ssloc.php" },
+                        { nm: "mas_out_emp", menu: "New Stock Issue Employees", link: "frm_mst_out_emp.php" },
+                        { nm: "mas_item", menu: "New Item Single", link: "frm_mst_item.php" },
+                        { nm: "mas_item_mult", menu: "New Item Multiple", link: "frm_mst_item_mult.php" },
+                        { nm: "mas_item_mult_update", menu: "Update Item Multiple", link: "frm_mst_item_mult_update.php" },
+                        { nm: "mas_item_mult_rlvl", menu: "Re-Order Level Multiple", link: "frm_mst_item_mult_rlvl.php" }
+                    ]
+                },
+                {
+                    nm: "stock", menu: "Stock Section", link: "#",
+                    submenu: [
+                        { nm: "stockin", menu: "Stock IN", link: "/Tran/StockIN" },
+                        { nm: "stockout", menu: "Stock OUT", link: "/Tran/StockOUT" },
+                        { nm: "stocktransfer", menu: "Stock Transfer", link: "/Tran/StockTransaction" },
+                        { nm: "stocktinransfer", menu: "Internal Goods Movement", link: "/Tran/StockINTransaction" },
+                        { nm: "stockscrap", menu: "Stock Scrap", link: "/Tran/StockScrap" },
+                        { nm: "stockadjust", menu: "Stock Adjustment", link: "/Tran/StockAdjustment" },
+                        { nm: "stockexl", menu: "Stock Process Excel", link: "/Tran/StockExcel" },
+                        { nm: "stockin_list", menu: "Stock Process List", link: "frm_stock_process_list.php" },
+                        { nm: "stockin_tran_approve", menu: "Stock Transfer Approve", link: "rpt_stock_tran_approve.php" },
+                        { nm: "stockin_cent_upld", menu: "Central Stock Upload", link: "frm_trn_stock_central_upld.php" }
+                    ]
+                },
+                {
+                    nm: "data_rpt", menu: "Stock Reporting", link: "#",
+                    submenu: [
+                        { nm: "rpt_stock", menu: "Check Stock Detailed", link: "/Reports/DTLStock" },
+                        { nm: "rpt_stock_summ", menu: "Check Stock Summary", link: "rpt_stock_summ.php" },
+                        { nm: "rpt_stock_date", menu: "Date Wise Stock Details", link: "rpt_stock_date.php" },
+                        { nm: "rpt_stock_warn", menu: "Warning Level Report", link: "rpt_stock_warning.php" },
+                        { nm: "rpt_stock_rolvl", menu: "Re-Order Level Report", link: "rpt_stock_reorder.php" },
+                        { nm: "rpt_central_stock", menu: "Central Stock", link: "rpt_stock_sap.php" }
+                    ]
+                }
+            ];
+
+        </script>
+
+    }
+
+    if (ViewData["utp"] == "A") {
+    
+        <script>
+
+            var SideMenu = [
+                {
+                    nm: "master", menu: "Master Entry", link: "#",
+                    submenu: [
+                        { nm: "mas_new_loc", menu: "New Location", link: "/Hello/Tello" },
+                        { nm: "mas_new_user", menu: "New User", link: "frm_adm_user.php" }
+                    ]
+                },
+                {
+                    nm: "assignments", menu: "Assignments Section", link: "#",
+                    submenu: [
+                        { nm: "stockin", menu: "New Material Type", link: "frm_adm_mattp.php" },
+                        { nm: "stockin_mult", menu: "Asset Entry Multiple", link: "frm_stockin_multiple.php" },
+                        { nm: "stockin_part", menu: "Stock IN (Parts)", link: "frm_stockin_part.php" },
+                        { nm: "stockin_list", menu: "Stock IN List", link: "frm_stockin_list.php" }
+                    ]
+                },
+                {
+                    nm: "data", menu: "User", link: "#",
+                    submenu: [
+                        { nm: "ac_create_request", menu: "Create Request", link: "frm_usr_gen_request.php" },
+                        { nm: "ac_my_cart", menu: "My CART", link: "frm_usr_cart.php" },
+                        { nm: "ac_my_request", menu: "My Request", link: "frm_data_photo.php" },
+                        { nm: "ac_new_enquiry", menu: "New Enquiry", link: "frm_data_photo.php" }
+
+                    ]
+                },
+                {
+                    nm: "data_rpt", menu: "Stock Reporting", link: "#",
+                    submenu: [
+                        { nm: "rpt_stock", menu: "Check Stock", link: "rpt_stock.php" },
+                        { nm: "lst_request", menu: "Request List", link: "lst_request.php" },
+                        { nm: "lst_location", menu: "Location List", link: "lst_location.php" },
+                        { nm: "ls_rack", menu: "Search Assets and Parts", link: "ls_assets_parts.php" },
+                        { nm: "rpt_stock_issued", menu: "Check Stock Issued", link: "rpt_stock_issued_1.php" },
+                        { nm: "rpt_month_sal", menu: "Monthly Salary", link: "rpt_month_sal.php" }
+                    ]
+                }
+            ];
+
+        </script>
+    }
+}
+
+
+
+<div class="bg-white border-right" id="sidebar-wrapper">
+    <div class="sidebar-heading">Stock Handling System</div>
+    <div id="sc_menu"></div>
+</div>
+
+<script>
+    //$("#scr_menu").html(menust);
+    try {
+        var sm = new HC_SideMenu("psMenu");
+        sm.CreateJQObject($("#sc_menu"));
+        sm.createMenus(SideMenu);
+    } catch (e) { alert(e); }
+
+    //var ts = new HC_TextBox("txts");
+    //ts.generateControl("scr_search_div");
+    //$("#scr_search_div_txts_container").css("margin-top","5px");
+
+    function OPage(x, a) {
+        //sm.OpenLink(x,"hobal");
+    }
+
+</script>

@@ -1,0 +1,83 @@
+/* 
+    Document   : HC_FormControls
+    Created on : Sep 14, 2020, 10:12:17 AM
+    Author     : nasreen
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+.HC_AutoCompleGridView{
+    margin-top: 3px;
+}
+
+.HC_AutoCompleContainer{
+   position: relative;
+   border: none;
+   border-width: 0px;
+}
+
+.HC_AutoCompleItemContainer{
+  position: absolute;
+  border: 1px solid #d4d4d4;
+  border-bottom: none;
+  border-top: none;
+  z-index: 99;
+  /*position the autocomplete items to be the same width as the container:*/
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+}
+
+.HC_DatePickerItemContainer{
+  position: absolute;
+  z-index: 99;
+  width: 110px;
+  /*position the autocomplete items to be the same width as the container:*/
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+}
+
+.HC_DatePicker_Button{
+ border-radius:0px;
+ -webkit-border-radius:0px;
+ -moz-border-radius:0px;
+}
+
+.HC_CheckBox_Focus{
+    font-weight: bold;
+}
+
+.HC_RadioValidationFalse{
+    border-color: red;
+    border-style: solid;
+    border-width: 1px;
+    padding: 3px;
+    border-radius: 3px;
+}
+
+.HC_RadioValidationTrue{
+    border-color: green;
+    border-style: solid;
+    border-width: 1px;
+    padding: 3px;
+    border-radius: 3px;
+}
+
+.HC_RadioErrorMSG{
+    font-size: xx-small;
+    color: red;
+}
+
+
+.HC_RadioCheckBox_Label{
+    margin-top: 5px;
+    margin-left: 5px;
+}
+
+
+.HCG_DatePicker{
+    background-color: #ff6666;
+}

@@ -1,0 +1,564 @@
+/* 
+    Document   : HCG_Stylesheet
+    Created on : Jul 16, 2020, 1:17:18 PM
+    Author     : rajib
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+
+table.HCGrid {
+ /*border-collapse: collapse;*/
+}
+
+table.HCGrid tbody {
+  /*overflow-y: scroll;*/
+  /*overflow-x: hidden;*/
+}
+
+table.HCGrid > thead {
+  background-color: #EFEFEF;
+}
+
+table.HCGrid > tfoot {
+  background-color: #EFEFEF;
+}
+
+.HCGrid_ScrollX_table{
+  overflow-x: scroll;
+  display: block;
+}
+
+.HCGrid_ScrollX_tbody{
+  overflow-x: hidden;
+}
+
+.HCGrid_ScrollY{
+  display: block;
+}
+
+table.HCGrid tbody tr td {
+  padding-left:3px;
+  padding-right:3px;
+  padding-top:0px;
+  padding-bottom:0px;
+  border: dashed 1px lightblue;
+}
+
+table.HCGrid thead tr th,table.HCGrid tfoot tr th {
+  padding-left:3px;
+  padding-right:3px;
+  padding-top:3px;
+  padding-bottom:0px;
+  border: dashed 1px lightblue;
+  font-size: smaller;
+}
+
+
+
+.form-control-sm {
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+.HCG_RowSearched{
+    
+}
+
+.HCG_RowSearched:hover{
+    background-color: antiquewhite;
+}
+
+.HCG_RowNonSearched{
+}
+
+.HCG_RowNonSelected{
+    background-color: white;
+}
+
+.TDHead , th.TDBody{
+    min-width: 30px;
+    background-color: #EFEFEF;
+    cursor: pointer;
+}
+
+.TDOverflow{
+    display:inline-block;
+    white-space:nowrap;
+    position:relative; /* must be relative */
+    width:100%; /* fit to table cell width */
+    margin-right:-1000px; /* technically this is a less than zero width object */
+    overflow:hidden;
+    padding: 0px;
+}
+
+.TDLeft
+{
+    text-align: left;
+}
+
+.TDRight
+{
+    text-align: right;
+}
+
+.TDCenter
+{
+    text-align: center;
+}
+
+.HCG_noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+      -webkit-user-select: none; /* Safari */
+       -khtml-user-select: none; /* Konqueror HTML */
+         -moz-user-select: none; /* Old versions of Firefox */
+          -ms-user-select: none; /* Internet Explorer/Edge */
+              user-select: none; /* Non-prefixed version, currently
+                                    supported by Chrome, Edge, Opera and Firefox */
+}
+
+.HCG_SearchTextBox{
+    margin-bottom: 3px;
+}
+
+.HC_GridView_Transaction tbody tr{
+    height: 25px;
+}
+
+.HC_GridView_Transaction_TextBox{
+    margin-top: 0px;
+}
+
+/* Orange Theme Zig Zag Starts */
+
+table.HCGrid_TA tr:nth-child(even){
+    background: #fffaee;
+}
+
+table.HCGrid_TA tr:nth-child(odd){
+     background: #ddd;
+}
+
+.HCG_DataSelect_TA{
+    /*background-color: #fbbd18;*/
+    background: skyblue;
+    color:whitesmoke;
+}
+
+.HCG_GridViewBack_TA{
+    background: #fefefe;
+}
+
+/* Orange Theme Zig Zag Ends */
+
+/* Orange Theme Zig Zag Starts */
+
+table.HCGrid_TB tr:nth-child(even){
+    background: #fffaee;
+}
+
+table.HCGrid_TB tr:nth-child(odd){
+     background: #ffe8ab;
+}
+
+.HCG_DataSelect_TB{
+    /*background-color: #fbbd18;*/
+    background: skyblue;
+    color:whitesmoke;
+}
+
+.HCG_GridViewBack_TB{
+    background:#fbf1d7;
+}
+
+/* Orange Theme Zig Zag Ends */
+
+
+/* Green Theme Zig Zag Starts */
+
+table.HCGrid_TC tr:nth-child(even){
+    background: #fffaee;
+}
+
+table.HCGrid_TC tr:nth-child(odd){
+    background: #ccffcc;
+}
+
+.HCG_DataSelect_TC{
+    /*background-color: #fbbd18;*/
+    background: skyblue;
+    color:whitesmoke;
+}
+
+.HCG_GridViewBack_TC{
+    background: #e6ffe6;
+}
+
+/* Green Theme Zig Zag Ends */
+
+
+/* Ocean Blue Theme Zig Zag Starts */
+
+table.HCGrid_TD tr:nth-child(even){
+    background: #fffaee;
+}
+
+table.HCGrid_TD tr:nth-child(odd){
+    background: #ccffff;
+}
+
+.HCG_DataSelect_TD{
+    /*background-color: #fbbd18;*/
+    background: skyblue;
+    color:whitesmoke;
+}
+
+.HCG_GridViewBack_TD{
+    background: #e5fdfd;
+}
+
+/* Ocrean Blue Theme Zig Zag Ends */
+
+
+/* Navy Blue Theme Zig Zag Starts */
+
+table.HCGrid_TE tr:nth-child(even){
+    background: #fffaee;
+}
+
+table.HCGrid_TE tr:nth-child(odd){
+    background: #ccccff;
+}
+
+.HCG_DataSelect_TE{
+    /*background-color: #fbbd18;*/
+    background: #8fd19e;
+    color:whitesmoke;
+}
+
+.HCG_GridViewBack_TE{
+    background: #eaeaff;
+}
+
+/* Navy Blue Theme Zig Zag Ends */
+
+
+/* Yellow Theme Zig Zag Starts */
+
+table.HCGrid_TF tr:nth-child(even){
+    background: #fffaee;
+}
+
+table.HCGrid_TF tr:nth-child(odd){
+    background: #ffffcc;
+}
+
+.HCG_DataSelect_TF{
+    /*background-color: #fbbd18;*/
+    background: #8fd19e;
+    color:whitesmoke;
+}
+
+.HCG_GridViewBack_TF{
+    background: #ffffe5;
+}
+
+/* Yellow Theme Zig Zag Ends */
+
+
+/* Red Theme Zig Zag Starts */
+
+table.HCGrid_TG tr:nth-child(even){
+    background: #ffcccc;
+}
+
+table.HCGrid_TG tr:nth-child(odd){
+    background: #ffffcc;
+}
+
+.HCG_DataSelect_TG{
+    /*background-color: #fbbd18;*/
+    background: #8fd19e;
+    color:whitesmoke;
+}
+
+.HCG_GridViewBack_TG{
+    background: #ffe6e6;
+}
+
+/* Red Theme Zig Zag Ends */
+
+
+/* Pink Theme Zig Zag Starts */
+
+table.HCGrid_TH tr:nth-child(even){
+    background: #ffccff;
+}
+
+table.HCGrid_TH tr:nth-child(odd){
+    background: #ffffcc;
+}
+
+.HCG_DataSelect_TH{
+    /*background-color: #fbbd18;*/
+    background: #8fd19e;
+    color:whitesmoke;
+}
+
+.HCG_GridViewBack_TH{
+    background: #fde7fd;
+}
+
+/* Pink Theme Zig Zag Ends */
+
+
+/* Dark Yellow Zig Zag Starts */
+
+table.HCGrid_TI tr:nth-child(even){
+    background: #ecec9b
+}
+
+table.HCGrid_TI tr:nth-child(odd){
+    background: #ffffcc;
+}
+
+.HCG_DataSelect_TI{
+    /*background-color: #fbbd18;*/
+    background: #8fd19e;
+    color:whitesmoke;
+}
+
+.HCG_GridViewBack_TI{
+    background: #fbfbd7;
+}
+
+/* Pink Theme Zig Zag Ends */
+
+
+/* Dark Sea Blue Zig Zag Starts */
+
+table.HCGrid_TJ tr:nth-child(even){
+    background: #ecec9b
+}
+
+table.HCGrid_TJ tr:nth-child(odd){
+    background: #aad4d4;
+}
+
+.HCG_DataSelect_TJ{
+    /*background-color: #fbbd18;*/
+    background: #8fd19e;
+    color:whitesmoke;
+}
+
+.HCG_GridViewBack_TJ{
+    background: #dffcfc;
+}
+
+/* Dark Sea Blue Zig Zag Ends */
+
+
+
+
+/* Gray Theme Starts */
+
+table.HCGrid_TK tr{
+    background: #edf8f8;
+}
+
+.HCG_DataSelect_TK{
+    /*background-color: #fbbd18;*/
+    background: #8fd19e;
+    color:whitesmoke;
+}
+
+.HCG_GridViewBack_TK{
+    background: #fbffff;
+}
+
+/*  Gray Theme Ends */
+
+
+/* Orange Theme Starts */
+
+table.HCGrid_TL tr{
+    background: #ffe5a9;
+}
+
+.HCG_DataSelect_TL{
+    /*background-color: #fbbd18;*/
+    background: #8fd19e;
+    color:whitesmoke;
+}
+
+.HCG_GridViewBack_TL{
+    background: #fff0ce;
+}
+
+/*  Oracnge Theme Ends */
+
+
+/* Orange Theme Starts */
+
+table.HCGrid_TM tr{
+    background: #ccffcc;
+}
+
+.HCG_DataSelect_TM{
+    /*background-color: #fbbd18;*/
+    background: #8fd19e;
+    color:whitesmoke;
+}
+
+.HCG_GridViewBack_TM{
+    background: #e1ffe1;
+}
+
+/*  Oracnge Theme Ends */
+
+
+/* Sky Blue Theme Starts */
+
+table.HCGrid_TN tr{
+    background: #ccffff;
+}
+
+.HCG_DataSelect_TN{
+    /*background-color: #fbbd18;*/
+    background: #8fd19e;
+    color:whitesmoke;
+}
+
+.HCG_GridViewBack_TN{
+    background: #e3ffff;
+}
+
+/*  Sky Blue Theme Ends */
+
+
+/* Navy Blue Theme Starts */
+
+table.HCGrid_TO tr{
+    background: #ccccff;
+}
+
+.HCG_DataSelect_TO{
+    /*background-color: #fbbd18;*/
+    background: #8fd19e;
+    color:whitesmoke;
+}
+
+.HCG_GridViewBack_TO{
+    background: #eeeeff;
+}
+
+/*  Navy Blue Theme Ends */
+
+
+/* Yellow Theme Starts */
+
+table.HCGrid_TP tr{
+    background: #ffffcc;
+}
+
+.HCG_DataSelect_TP{
+    /*background-color: #fbbd18;*/
+    background: #8fd19e;
+    color:whitesmoke;
+}
+
+.HCG_GridViewBack_TP{
+    background: #ffffe9;
+}
+
+/*  Yellow Theme Ends */
+
+
+
+/* Red Theme Starts */
+
+table.HCGrid_TQ tr{
+    background: #ffcccc;
+}
+
+.HCG_DataSelect_TQ{
+    /*background-color: #fbbd18;*/
+    background: #8fd19e;
+    color:whitesmoke;
+}
+
+.HCG_GridViewBack_TQ{
+    background: #ffe3e3;
+}
+
+/*  Red Theme Ends */
+
+
+/* Pink Theme Starts */
+
+table.HCGrid_TR tr{
+    background: #ffccff;
+}
+
+.HCG_DataSelect_TR{
+    /*background-color: #fbbd18;*/
+    background: #8fd19e;
+    color:whitesmoke;
+}
+
+.HCG_GridViewBack_TR{
+    background: #ffe2ff;
+}
+
+/*  Pink Theme Ends */
+
+
+/* Font Classes Starts */
+
+table.HCGrid_F1
+{
+    font-family: courier new;
+    font-size: 11pt;
+}
+
+table.HCGrid_F2
+{
+    font-family: verdana;
+    font-size: 10pt;
+}
+
+table.HCGrid_F3
+{
+    font-family: Book Antiqua;
+    font-size: 10pt;
+}
+
+table.HCGrid_F4
+{
+    font-family: Bookman Old Style;
+    font-size: 10pt;
+}
+
+table.HCGrid_F5
+{
+    font-family: Times New Roman;
+    font-size: 10pt;
+}
+
+table.HCGrid_F6
+{
+    font-family: Arial;
+    font-size: 9pt;
+}
+
+table.HCGrid_F7
+{
+    font-family: Cambria;
+    font-size: 10pt;
+}
+
+table.HCGrid_F8
+{
+    font-family: Tahoma;
+    font-size: 10pt;
+}

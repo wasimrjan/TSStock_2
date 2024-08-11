@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewData["Title"] = "StockIN";
+}
+
+<div class="container-fluid">
+
+    <div id="dvacledger">
+    </div>
+
+    <script>
+        try {
+
+            fmStockIN.Dispose();
+            fmStockIN.Form.FormOnly = true;
+            fmStockIN.OpenFormFinal("dvacledger", "FO");
+            HCGlobal = fmStockIN;
+
+
+        } catch (e) {
+            alert(e);
+        }
+    </script>
+
+</div>

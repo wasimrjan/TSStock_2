@@ -1,0 +1,412 @@
+﻿
+@{
+    ViewData["Title"] = "DTLStock";
+}
+
+<div class="container-fluid">
+
+    <div id="dvacledger">
+        <br />
+        <h6>Stock Report Detailed</h6>
+        <hr />
+
+        <div id="opn" class="row no-gutter"></div>
+
+    </div>
+
+    <script>
+
+        var pb = new HC_ProgressBar();
+
+
+        var js = [{ "opn": "All" }, { "opn": "Available" }, { "opn": "Zero Only" }];
+        var sopn = new HC_AutoCompleteJSON("sopn", "opn", "opn", "opn", js);
+        sopn.generateControlJQObject($("#opn"));
+        sopn.setLabel("Stock Options : ");
+        sopn.setBSColumn(6);
+        sopn.GridView.setColumnWidth(0, "200");
+
+        /*function sopn_DataSelected(json){
+            SearchData(json.opn);
+        }*/
+        sopn.setText("All");
+        sopn.setValue("All");
+
+
+        var jsc = [{ "opn": "Critical" }, { "opn": "Non-Critical" }, { "opn": "Critical Only" }];
+        var copn = new HC_AutoCompleteJSON("copn", "opn", "opn", "opn", jsc);
+        copn.generateControlJQObject($("#opn"));
+        copn.setLabel("Critical Options : ");
+        copn.setBSColumn(6);
+        copn.GridView.setColumnWidth(0, "200");
+
+        copn.setText("Critical");
+        copn.setValue("Critical");
+        /*
+        function copn_DataSelected(json){
+            SearchData(json.opn);
+        }*/
+
+        $("#dvacledger").append("<div id='dvbtns' style='margin-bottom:10px'></div>");
+
+        var btnref = new HC_Button("btnref", "Refresh Report");
+        btnref.generateControl("dvbtns");
+        btnref.setButtonType("btn-success");
+        $("#" + btnref.getID()).css("width", "150");
+        btnref.setEvent(function () {
+
+            SearchData(opn.Text);
+
+        });
+
+
+        var btnexprt = new HC_Button("btnexprt", "Export To Excel");
+        btnexprt.generateControl("dvbtns");
+        btnexprt.setButtonType("btn-info");
+        $("#" + btnexprt.getID()).css("width", "150");
+        btnexprt.setEvent(function () {
+
+            gd.ExportToExcel();
+
+        });
+
+
+        var btnadvs = new HC_Button("btnadvs", "Advance Search");
+        btnadvs.generateControl("dvbtns");
+        btnadvs.setButtonType("btn-primary");
+        $("#" + btnadvs.getID()).css("width", "150");
+        btnadvs.setEvent(function () {
+
+            qvStock.Dispose();
+            qvStock.ModalType = "XL";
+            qvStock.OpenModelQuery("dvacledger");
+
+            qvStock.GridView.Dispose();
+            qvStock.ButtonGroup.Dispose();
+
+
+            $("#" + qvStock.Modal.getID() + "_body").append("<div id='dvmdbtn'></div>");
+
+            var btnsrch = new HC_Button();
+            btnsrch.generateControl("dvmdbtn");
+            btnsrch.setLabel("Filter Data From List");
+            btnsrch.setButtonType("btn-info");
+            $("#" + btnsrch.getID()).css("width", "250");
+            btnsrch.setEvent(function () {
+
+                SearchData(qvStock.generateWhereClause());
+                qvStock.Modal.CloseModal();
+
+            });
+
+        });
+
+
+        function SearchData(qq) {
+            var q = qq || "";
+            var aj = new HC_Ajax("DTLStock");
+            aj.addFormData("loc", GP.loc, GP.loc);
+            aj.addFormData("sopn", sopn.Text, sopn.Text);
+            aj.addFormData("copn", copn.Text, copn.Text);
+            aj.addFormData("q", q, q);
+            pb.openProgress();
+            aj.CallServer(function (data) {
+
+                //console.log(data);
+                gd.populateUsingJSON(data);
+                pb.closeProgess();
+            });
+        }
+
+        var gd = new HC_GridView("grdstockincnf");
+        gd.Create("dvacledger");
+        gd.AddColumn("id", "Stock ID", 60);
+        gd.AddColumn("itid", "Item ID", 60);
+        gd.AddColumn("critical", "Critical", 70);
+        gd.AddColumn("mtcd", "UMC", 90);
+        gd.AddColumn("material", "Material", 360);
+        gd.AddColumn("make", "Make", 100);
+        gd.AddColumn("uom", "UOM", 80);
+        gd.AddColumn("loc", "Location", 120);
+        gd.AddColumn("sloc", "Sub Loc", 120);
+        gd.AddColumn("ssloc", "Rack", 120);
+        gd.AddColumn("avl", "Avail", 70);
+        gd.AddColumn("sti", "Stk IN", 70);
+        gd.AddColumn("sto", "Stk OT", 70);
+        gd.AddColumn("tri", "Tr IN", 70);
+        gd.AddColumn("tro", "Tr OT", 70);
+        gd.AddColumn("adi", "Ad IN", 70);
+        gd.AddColumn("ado", "Ad OT", 70);
+        gd.AddColumn("isr", "IS Rt", 70);
+        gd.AddColumn("scp", "Scrap", 70);
+
+        gd.setScrollBarY(true);
+        gd.setScrollBarX(true);
+        gd.setGridViewHeight(550);
+        gd.setSearching();      //For Enable Searching
+        gd.enablePaging(20);
+        gd.setTheme("TF");
+
+
+        SearchData(opn.Text);
+
+        $("#chkcri").click(function () {
+            SearchData(opn.Text);
+        });
+
+        function dvacledger_grdstockincnf_RowDoubleClick(idx, json) {
+
+            var fmStockDetails = new HC_Forms("fmStockDetails");
+            fmStockDetails.Heading = "New Stock Item";
+            fmStockDetails.WhereColumn = "skid";
+            fmStockDetails.AssignFields(JSON.stringify(jsonStockDetails));
+            fmStockDetails.FirstFocusControl = "skid";
+            fmStockDetails.SearchColumns = "skid";
+
+            var mdStock = new HC_BSModal("MDStockDet");
+            mdStock.ModalType = "XL";
+            mdStock.Create("dvacledger");
+            mdStock.OpenModal();
+
+            var mid = mdStock.getID();
+
+            var hd = "<div class='row no-gutter'>";
+            hd += "<div class='col-sm-4'>";
+            hd += "<h5>Stock Details</h5>";
+            hd += "</div>";
+            hd += "<div class='col-sm-8' style='text-align:right'>";
+            hd += "<div id='dvbtn'></div>";
+            hd += "</div>";
+            hd += "</div>";
+
+            $("#" + mid + "_body").html(hd);
+
+            var btndl = new HC_Button("btndl", "Delete Stock");
+            btndl.generateControlJQObject($("#dvbtn"));
+            btndl.setButtonType("btn-danger");
+            $("#" + btndl.getID()).css("width", "250");
+            btndl.setEvent(function () {
+
+                if (confirm("Are you sure want to delete stock ?")) {
+
+                    if (confirm("Deleted stock will not be recover do you want to continue ?")) {
+
+                        var aj = new HC_Ajax("StockDelete");
+                        aj.addFormData("skid", json.skid, json.skid);
+
+                        aj.CallServer(function (data) {
+
+                            mdStock.CloseModal();
+                            alert(data);
+                            SearchData(opn.Text);
+
+                        });
+                    }
+                }
+
+            });
+
+            var btnsz = new HC_Button("btnsz", "Set Stock To Zero");
+            btnsz.generateControlJQObject($("#dvbtn"));
+            btnsz.setButtonType("btn-warning");
+            $("#" + btnsz.getID()).css("width", "250");
+            btnsz.setEvent(function () {
+
+                if (confirm("Are you sure want to make stock size zero(0).")) {
+
+                    var aj = new HC_Ajax("StockToZero");
+                    aj.addFormData("skid", json.skid, json.skid);
+
+                    aj.CallServer(function (data) {
+
+                        mdStock.CloseModal();
+                        alert(data);
+                        SearchData(opn.Text);
+
+                    });
+                }
+
+            });
+
+
+            try {
+                fmStockDetails.FormOnly = true;
+                fmStockDetails.OpenFormFinal(mid + "_body", "FO");
+                fmStockDetails.setReadOnlyAll(true);
+                fmStockDetails.ButtonGrForm.setHideAll();
+                fmStockDetails.setShowHeading(false);
+
+                fmStockDetails.getControlKey("itid").setText(json.itid);
+                fmStockDetails.getControlKey("mtcd").setText(json.mtcd);
+                fmStockDetails.getControlKey("material").setText(json.material);
+
+                fmStockDetails.getControlKey("make").setText(json.make);
+                fmStockDetails.getControlKey("loc").setText(json.loc);
+                fmStockDetails.getControlKey("sloc").setText(json.sloc);
+                fmStockDetails.getControlKey("ssloc").setText(json.ssloc);
+                fmStockDetails.getControlKey("skid").setText(json.skid);
+                fmStockDetails.getControlKey("uom").setText(json.uom);
+
+
+            } catch (e) {
+                alert(e);
+            }
+
+
+            $("#" + mid + "_body").append("<div id='stkopn' class='row no-gutter'></div>");
+
+            var acstkopn = new HC_AutoCompleteJSON("process", "process", "process", "process", null);
+            acstkopn.generateControlJQObject($("#stkopn"));
+            acstkopn.setLabel("Select Stock Options : ");
+            acstkopn.setBSColumn(6);
+            acstkopn.GridView.setColumnWidth(0, "200");
+
+            (new HC_Ajax("ProcessList")).CallServer(function (data) {
+
+                acstkopn.populateUsingJSON(data);
+                //acstkopn.addRow("","",0);
+
+            });
+
+
+            var stkst = new HC_DatePicker("stkst");
+            stkst.generateControlJQObject($("#stkopn"));
+            stkst.setLabel("Start Date : ");
+            stkst.setBSColumn(3);
+
+            var stken = new HC_DatePicker("stken");
+            stken.generateControlJQObject($("#stkopn"));
+            stken.setLabel("End Date : ");
+            stken.setBSColumn(3);
+
+
+            $("#" + mid + "_body").append("<div id='dvbtn2' style='margin-bottom:5px'></div>");
+
+            var btnsh = new HC_Button("btnsh", "Show Stock");
+            btnsh.generateControlJQObject($("#dvbtn2"));
+            btnsh.setButtonType("btn-info");
+            $("#" + btnsh.getID()).css("width", "250");
+            btnsh.setEvent(function () {
+
+                var ajSD = new HC_Ajax("DTLStockLine");
+                ajSD.addFormData("skid", json.skid);
+                ajSD.addFormData("opn", acstkopn.Text);
+                ajSD.addFormData("stdt", stkst.Text);
+                ajSD.addFormData("endt", stken.Text);
+
+                ajSD.CallServer(function (data) {
+
+                    gdSD.populateUsingJSON(data);
+
+                });
+
+
+            });
+
+
+            var btnee = new HC_Button("btnee", "Export To Excel");
+            btnee.generateControlJQObject($("#dvbtn2"));
+            btnee.setButtonType("btn-success");
+            $("#" + btnee.getID()).css("width", "250");
+            btnee.setEvent(function () {
+
+                gdSD.ExportToExcel();
+
+            });
+
+            var gdqt = new HC_GridView("gdqt");
+            gdqt.setSelectionMode("C");
+            gdqt.CreateGridObject($("#" + mid + "_body"));
+            gdqt.AddColumn("avl", "Avail", 50);
+            gdqt.AddColumn("sti", "Stk IN", 50);
+            gdqt.AddColumn("sto", "Stk OT", 50);
+            gdqt.AddColumn("tri", "Tr IN", 50);
+            gdqt.AddColumn("tro", "Tr OT", 50);
+            gdqt.AddColumn("adi", "Ad IN", 60);
+            gdqt.AddColumn("ado", "Ad OT", 60);
+            gdqt.AddColumn("isr", "IS Rt", 50);
+            gdqt.AddColumn("scp", "Scrap", 50);
+            gdqt.AddColumn("critical", "Critical", 80);
+
+            gdqt.populateUsingJSON("[" + JSON.stringify(json) + "]");
+
+            var gdSD = new HC_GridView("gdSD");
+            gdSD.setSelectionMode("C");
+            gdSD.CreateGridObject($("#" + mid + "_body"));
+            gdSD.AddColumn("id", "ID", 60);
+            gdSD.AddColumn("bprocess", "BProcess", 160);
+            gdSD.AddColumn("process", "Process", 160);
+            gdSD.AddColumn("dfdt", "Date", 120);
+            gdSD.AddColumn("qty", "Qty", 50);
+            gdSD.AddColumn("issueto", "Issue To", 200);
+            gdSD.AddColumn("takenby", "Taken By", 200);
+            gdSD.AddColumn("tloc", "Tran Loc", 150);
+            gdSD.AddColumn("tsloc", "Tran Sub Loc", 350);
+            gdSD.AddColumn("rem", "Remarks", 350);
+            gdSD.setDefaultWidth(true);
+            gdSD.setScrollBarX(true);
+            gdSD.setScrollBarY(true);
+
+            gdSD.enablePaging(5);
+            gdSD.setGridViewHeight(200);
+
+
+            var ajSD = new HC_Ajax("DTLStockLine");
+            ajSD.addFormData("skid", json.id, json.id);
+            ajSD.CallServer(function (data) {
+
+                gdSD.populateUsingJSON(data);
+
+            });
+
+
+            /*var pp = new HC_MenuGroup("gridMenu");
+            pp.OpenMenuModal($("#dvacledger"));
+            pp.setMenuGroupLabel("Stock Process Menu");
+            pp.addMenu("stkdt","Stock Details");
+            pp.addMenu("stkdl","Stock Delete");
+            pp.Toggle();
+
+
+            pp.setEvent(0,function(){
+
+                var mdStock = new HC_BSModal("MDStockDet");
+                mdStock.ModalType = "XL";
+                mdStock.Create("dvacledger");
+
+                mdStock.OpenModal();
+
+
+                pp.Modal.CloseModal();
+
+            });
+
+            pp.setEvent(1,function(){
+
+                pp.Modal.CloseModal();
+                if(confirm("Are you sure want to remote stock")){
+                    var a = [];
+                    var aj = new HC_Ajax("StockDelete");
+                    a.push(json);
+
+                    aj.TranData = a;
+
+                    aj.CallServer(function(data){
+
+                       alert(data);
+                       SearchData(opn.Text);
+
+                    });
+                }
+
+            });
+
+            */
+
+
+        }
+
+    </script>
+
+</div>
+

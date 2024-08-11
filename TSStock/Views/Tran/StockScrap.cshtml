@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewData["Title"] = "StockScrap";
+}
+
+<div class="container-fluid">
+
+    <div id="dvacledger">
+    </div>
+
+    <script>
+        try {
+
+            fmStockSCRAP.Dispose();
+            fmStockSCRAP.Form.FormOnly = true;
+            fmStockSCRAP.OpenFormFinal("dvacledger", "FO");
+            HCGlobal = fmStockSCRAP;
+
+
+        } catch (e) {
+            alert(e);
+        }
+    </script>
+
+</div>
+

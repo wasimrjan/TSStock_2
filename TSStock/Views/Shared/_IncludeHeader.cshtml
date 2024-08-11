@@ -1,0 +1,208 @@
+﻿
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+
+<script src="~/jquery/jquery-3.3.1.min.js" asp-append-version="true"></script>
+<script type="text/javascript" src="~/jquery/popper.min.js" asp-append-version="true"></script>
+<link type="text/css" href="~/bootstrap/css/bootstrap.min.css" rel="stylesheet" asp-append-version="true"></link>
+<script type="text/javascript" src="~/bootstrap/js/bootstrap.min.js" asp-append-version="true"></script>
+
+<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/TSStock.styles.css" asp-append-version="true" />
+
+<link type="text/css" href="~/menucss/simple-sidebar.css" rel="stylesheet" asp-append-version="true"></link>
+<script type="text/javascript" src="~/jquery/jquery.mask.min.js" asp-append-version="true"></script>
+
+<script type="text/javascript" src="~/commonJS/common.js" asp-append-version="true"></script>
+<script type="text/javascript" src="~/commonJS/callajax.js" asp-append-version="true"></script>
+<script type="text/javascript" src="~/camera/webcam.js" asp-append-version="true"></script>
+<script type="text/javascript" src="~/jquery/chart.min.js" asp-append-version="true"></script>
+
+<script type="text/javascript" src="~/HC_Framework/HC_FormControls.js" asp-append-version="true"></script>
+<link type="text/css" href="~/HC_Framework/HC_FormControls.css" rel="stylesheet" asp-append-version="true"></link>
+<script type="text/javascript" src="~/HC_Framework/HC_GridView.js" asp-append-version="true"></script>
+<link type="text/css" href="~/HC_Framework/HC_GridView.css" rel="stylesheet" asp-append-version="true"></link>
+<script type="text/javascript" src="~/HC_Framework/HC_Forms.js" asp-append-version="true"></script>
+<link type="text/css" href="~/HC_Framework/HC_Forms.css" rel="stylesheet" asp-append-version="true"></link>
+<script type="text/javascript" src="~/HC_Framework/HC_Query.js" asp-append-version="true"></script>
+<script type="text/javascript" src="~/HC_Framework/HC_QueryControls.js" asp-append-version="true"></script>
+<script type="text/javascript" src="~/HC_Framework/HC_Graphs.js" asp-append-version="true"></script>
+<script type="text/javascript" src="~/HC_Framework/HC_Common.js" asp-append-version="true"></script>
+<script type="text/javascript" src="~/FRQ/AllForms.js" asp-append-version="true"></script>
+<script type="text/javascript" src="~/commonJS/common.js" asp-append-version="true"></script>
+<script type="text/javascript" src="~/commonJS/HC_Chart.js" asp-append-version="true"></script>
+
+
+<style>
+    body {
+        font-size: small;
+    }
+
+    .ctlRightRadius {
+        border-bottom-right-radius: 10px;
+    }
+
+    .GRIDRowBackColor {
+        background: #ffff99;
+    }
+
+    .autocomplete-items {
+    }
+
+</style>
+
+<style>
+
+    .row.no-gutter {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+        .row.no-gutter [class*='col-']:not(:first-child),
+        .row.no-gutter [class*='col-']:not(:last-child) {
+            padding-right: 2px;
+            padding-left: 2px;
+        }
+</style>
+
+<script>
+
+
+    $(window).bind('keydown', function (event) {
+        if (event.ctrlKey || event.metaKey) {
+            switch (String.fromCharCode(event.which).toLowerCase()) {
+                case 's':
+                    event.preventDefault();
+                    try {
+                        window["form_Save"]();
+                    } catch (e) { };
+                    SaveForm();
+                    break;
+                case 'f':
+                    event.preventDefault();
+                    try {
+                        window["form_New"]();
+                    } catch (e) { };
+                    NewForm();
+                    break;
+                case 'e':
+                    event.preventDefault();
+                    try {
+                        window["form_Edit"]();
+                    } catch (e) { };
+                    EditForm();
+                    break;
+                case 'g':
+                    event.preventDefault();
+                    try {
+                        window["form_Cancel"]();
+                    } catch (e) { };
+                    CancelForm();
+                    break;
+                case 'l':
+                    event.preventDefault();
+                    try {
+                        window["form_Close"]();
+                    } catch (e) { };
+                    CloseForm();
+                    break;
+                case 'r':
+                    event.preventDefault();
+                    try {
+                        window["form_Clear"]();
+                    } catch (e) { };
+                    ClearForm();
+                    break;
+                case 'd':
+                    event.preventDefault();
+                    try {
+                        window["form_Delete"]();
+                    } catch (e) { };
+                    DeleteForm();
+                    break;
+                case 'q':
+                    event.preventDefault();
+                    try {
+                        window["form_Query"]();
+                    } catch (e) { };
+                    QueryExecute();
+                    break;
+            }
+        }
+    });
+
+    function QueryExecute() {
+        HCGlobal.RunQuery();
+    }
+
+    function SaveForm() {
+        HCGlobal.SaveForm();
+    }
+
+    function ClearForm() {
+        HCGlobal.ClearForm();
+    }
+
+    function NewForm() {
+        HCGlobal.OpenNewForm();
+    }
+
+    function EditForm() {
+        HCGlobal.EditForm();
+    }
+
+    function DeleteForm() {
+        HCGlobal.DeleteForm();
+    }
+
+    function CancelForm() {
+        HCGlobal.CancelForm();
+    }
+
+    function CloseForm() {
+        if (HCGlobal.currClass.head.dataEdit === "Y") {
+            var d = confirm("Are you sure want to cancel editing");
+            if (d) {
+                HCGlobal.currClass.head.dataEdit = "N";
+                HCGlobal.currClass.functions.Close();
+            }
+        }
+        else
+            HCGlobal.currClass.functions.Close();
+    }
+
+</script>
+
+<script>
+    @{
+
+        String uid = "usertool";
+        String utp = "U";
+        String unm = "User Toolkit";
+        String sysdate = "18-Jun-2024";
+        String loc = "Toolkit Store";
+        String lcid = "1";
+
+        String gp = "";
+
+        gp = "var GP = {";
+        gp += "\"uid\":\"" + uid + "\",";
+        gp += "\"unm\":\"" + unm + "\",";
+        gp += "\"utp\":\"" + utp + "\",";
+        gp += "\"sysdate\":\"" + sysdate + "\",";
+        gp += "\"lcid\":\"" + lcid + "\",";
+        gp += "\"loc\":\"" + loc + "\",";
+        gp += "\"datedbformat\":\"yyyy-MM-dd\",";
+        gp += "\"dateuiformat\":\"dd.MM.yyyy\",";
+        gp += "\"currPG\":\"0\",";
+        gp += "\"currLINK\":null,";
+        gp += "\"prevLINK\":null";
+        gp += "};";
+
+        @Html.Raw(gp);
+
+    }
+
+</script>

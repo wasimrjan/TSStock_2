@@ -1,0 +1,228 @@
+﻿
+@{
+    ViewData["Title"] = "StockExcel";
+}
+
+
+<div class="container-fluid" style="background-color:#ffffe4;padding:10px">
+
+    <div id="dvacledger">
+
+        <br />
+        <h6>Import Stock From Excel File</h6>
+        <br />
+        <div id="opn" class="row no-gutter"></div>
+        <hr />
+        <label>Select Excel File</label>
+        <input type="file" id="flm" />
+        <br />
+        <br />
+        <a href="stock_format.xlsx?<?php echo filemtime(" stock_format.xlsx") ?>">Download Excel Stock In Format File</a>
+        <br />
+        <br />
+
+        <input type="hidden" id="seid" />
+
+    </div>
+
+    <script>
+
+        var pb = new HC_ProgressBar();
+
+        var acstkopn = new HC_AutoCompleteJSON("process", "process", "process", "process", null);
+        acstkopn.generateControlJQObject($("#opn"));
+        acstkopn.setLabel("Select Stock Options : ");
+        acstkopn.setBSColumn(6);
+        acstkopn.GridView.setColumnWidth(0, "200");
+
+
+        var aj = new HC_Ajax("ProcessList");
+        aj.addFormData("tp", "Excel");
+        aj.CallServer(function (data) {
+
+            acstkopn.populateUsingJSON(data);
+
+        });
+
+
+        var skdt = new HC_DatePicker("skdt");
+        skdt.generateControlJQObject($("#opn"));
+        skdt.setLabel("Select Date : ");
+        skdt.setBSColumn(6);
+
+        
+
+        function convertToBase64(flnm, fl, opn, dt) {
+            if (flnm.toUpperCase().includes(".XLSX")) {
+                var reader = new FileReader();
+                reader.readAsDataURL(fl);
+                reader.onload = function () {
+                    ExcelUpload(flnm,reader.result,opn,dt);
+                };
+            }
+            else {
+                alert("Only Excel Files  . . .");
+            }
+        }
+
+
+        function ExcelUpload(flnm, fl, opn, dt) {
+                
+                var aj = new HC_Ajax("StockExcelUPLD");
+                aj.addFormData("opn", opn);
+                aj.addFormData("dt", dt);
+                aj.addFormData("flnm", flnm);
+                aj.addFormData("flm", fl);
+
+                pb.openProgress();
+
+                aj.CallServer(function (data) {
+
+                    var id = JSON.parse(data).id;
+                    $("#seid").val(id);
+
+                    var daj = new HC_Ajax("StockExcelList");
+                    daj.addFormData("seid", id);
+                    daj.CallServer(function (gdata) {
+
+                        gd.populateUsingJSON(gdata);
+                        alert("Excel file uploaded successfully ! Proceed to for Database Update");
+                        pb.closeProgess();
+                        btnimp.setEnable(true);
+
+                    });
+
+                });
+
+
+                /*
+                var fd = new FormData();
+                fd.append("oid", "Data");
+                fd.append("loc", GP.loc);
+                fd.append("lcid", GP.lcid);
+                fd.append("cby", GP.uid);
+                fd.append("opn", opn);
+                fd.append("dt", dt);
+                fd.append("flm", fl);
+
+                pb.openProgress();
+                //alert("Dfsdf");
+                CSA(fd, "frm_trn_stockin_exl.php", function (data) {
+
+                    pb.closeProgess();
+
+                    $("#seid").val(data.trim());
+
+                    var fd = new FormData();
+                    fd.append("oid", "ShowList");
+                    fd.append("seid", data.trim());
+                    CSA(fd, "frm_trn_stockin_exl.php", function (data) {
+
+                        alert("Excel file uploaded successfully ! Proceed to for Database Update");
+                        gd.populateUsingJSON(data);
+
+                    });
+
+                });*/
+
+
+            
+
+        }
+
+
+        try {
+
+
+            $("#flm").change(function () {
+
+                if (acstkopn.Text.trim() == "") {
+                    alert("Select any option");
+                    acstkopn.setFocus();
+                }
+                else
+                    if (skdt.Text.trim() == "") {
+                        alert("Select date");
+                        skdt.setFocus();
+                    }
+                    else {
+                        convertToBase64($(this).val(), $(this)[0].files[0], acstkopn.Text.trim(), skdt.Text.trim());
+                    }
+                $(this).val("");
+            });
+
+            var btnimp = new HC_Button("btnimp", "Import Stock From Excel File");
+            btnimp.generateControl("dvacledger");
+            btnimp.setButtonType("btn-info");
+            btnimp.setEvent(function () {
+
+                if (confirm("Please check all data before uploading . . .")) {
+
+                    btnimp.setEnable(false);
+
+                    var aj = new HC_Ajax("StockExcelUpdateDB");
+                    //aj.TranData = gd.getJSON();
+                    aj.addFormData("seid", $("#seid").val());
+
+                    aj.CallServer(function (data) {
+
+                        //alert(data);
+                        gd.populateUsingJSON(data);
+                        alert("Data Uploaded to DB");
+
+                        $("#flm").val("");
+
+                        btnimp.setEnable(false);
+
+
+                    });
+                }
+
+            });
+
+            btnimp.setEnable(false);
+
+            var btnex = new HC_Button("btnex", "Export Report To Excel");
+            btnex.generateControl("dvacledger");
+            btnex.setButtonType("btn-success");
+            btnex.setEvent(function () {
+
+                gd.ExportToExcel();
+
+            });
+
+
+            var gd = new HC_GridView("gd");
+            gd.Create("dvacledger");
+            gd.AddColumn("seid", "Excel ID", 60);
+            gd.AddColumn("sl", "Sl", 40);
+            gd.AddColumn("scsts", "Status", 50);
+            gd.AddColumn("skid", "Stock ID", 70);
+            gd.AddColumn("dt", "Date(dd.MM.yyyy)", 120);
+            gd.AddColumn("mtcd", "UMC", 100);
+            gd.AddColumn("material", "Material", 250);
+            gd.AddColumn("make", "Make", 100);
+            gd.AddColumn("uom", "UOM", 100);
+            gd.AddColumn("loc", "Location", 100);
+            gd.AddColumn("sloc", "Sub Location", 100);
+            gd.AddColumn("ssloc", "Rack", 80);
+            gd.AddColumn("toloc", "Tran Location", 120);
+            gd.AddColumn("tosloc", "Tran Sub Location", 120);
+            gd.AddColumn("tossloc", "Tran Rack", 100);
+            gd.AddColumn("qty", "Qty", 50);
+            gd.AddColumn("critical", "Critical", 80);
+            gd.AddColumn("rem", "Remarks", 500);
+
+            gd.enablePaging(15);
+
+            gd.setDefaultWidth(true);
+            gd.setGridViewHeight(450);
+            gd.setScrollBarX(true);
+            gd.setScrollBarY(true);
+
+        } catch (e) {
+            alert(e);
+        }
+    </script>
+
+</div>
